@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -46,7 +47,7 @@ public class ContactService {
 
     public String updatePhoto(String id, File photoFile) {
         Contact contact = getContact(id);
-        String photoUrl = null;
+        String photoUrl = photoFunction.apply(id, (MultipartFile) photoFile);
         contact.setPhotoUrl(photoUrl);
         contactRepository.save(contact);
         return photoUrl;
@@ -60,9 +61,10 @@ public class ContactService {
             if (!Files.exists(pathStorageFile)) {
                 Files.createDirectories(pathStorageFile);
             }
-            Files.copy(image.getInputStream(), pathStorageFile.resolve(id + ".png"), REPLACE_EXISTING);
+            Files.copy(image.getInputStream(), pathStorageFile.resolve(id + fileExtension.apply(image.getOriginalFilename())), REPLACE_EXISTING);
+            return ServletUriComponentsBuilder.fromCurrentContextPath().path("/contacts/image/" + id + fileExtension.apply(image.getOriginalFilename())).toUriString();
         } catch (Exception e) {
             throw new RuntimeException("Unable to save image");
         }
-    }
+    };
 }
