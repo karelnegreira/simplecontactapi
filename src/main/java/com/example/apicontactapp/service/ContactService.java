@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+
 @Service
 @Slf4j
 @Transactional(rollbackOn = Exception.class)
@@ -30,6 +32,14 @@ public class ContactService {
     }
 
     public void deleteContact(Contact contact) {
-        contactRepository.delete(contact);
+        //todo
+    }
+
+    public String updatePhoto(String id, File photoFile) {
+        Contact contact = getContact(id);
+        String photoUrl = null;
+        contact.setPhotoUrl(photoUrl);
+        contactRepository.save(contact);
+        return photoUrl;
     }
 }

@@ -12,10 +12,7 @@ import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
-@Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @Table(name="contacts")
 public class Contact {
@@ -31,19 +28,69 @@ public class Contact {
     private String status;
     private String photoUrl;
 
-    /*
-    public Contact() {
-        //Demanded by JPA
+    public Contact() {}
+
+    public String getId() {
+        return id;
     }
 
-    public Contact(String name, String email, String title, String phone, String address, String status, String photoUrl) {
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
-    */
 }
