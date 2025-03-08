@@ -15,7 +15,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -49,6 +51,8 @@ public class ContactService {
         contactRepository.save(contact);
         return photoUrl;
     }
+
+    private final Function<String, String> fileExtension = filename -> Optional.of(filename).filter(name -> name.contains(".")).map(name -> "." + name.substring(filename.lastIndexOf(".") + 1)).orElse(".png");
 
     private final BiFunction<String, MultipartFile, String> photoFunction = (id, image) -> {
         try {
