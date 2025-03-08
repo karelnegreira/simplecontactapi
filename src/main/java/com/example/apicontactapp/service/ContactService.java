@@ -9,8 +9,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.function.BiFunction;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
 @Slf4j
@@ -41,5 +48,17 @@ public class ContactService {
         contact.setPhotoUrl(photoUrl);
         contactRepository.save(contact);
         return photoUrl;
+    }
+
+    private final BiFunction<String, MultipartFile, String> photoFunction = (id, image) -> {
+        try {
+            Path pathStorageFile = Paths.get("").toAbsolutePath().normalize();
+            if (!Files.exists(pathStorageFile)) {
+                Files.createDirectories(pathStorageFile);
+            }
+            Files.copy(image.getInputStream(), pathStorageFile.resolve(id + ".png"), REPLACE_EXISTING);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to save image");
+        }
     }
 }
