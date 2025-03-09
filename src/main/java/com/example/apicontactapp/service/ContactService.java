@@ -6,6 +6,8 @@ import com.example.apicontactapp.repo.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -29,7 +31,12 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class ContactService {
+    private static final Logger log = LoggerFactory.getLogger(ContactService.class);
     private final ContactRepository contactRepository;
+
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     public Page<Contact> getAllContacts(int page, int size) {
         return contactRepository.findAll(PageRequest.of(page, size, Sort.by("name")))
@@ -48,6 +55,7 @@ public class ContactService {
     }
 
     public String updatePhoto(String id, File photoFile) {
+        log.info("UPDATING PHOTO FOR USER");
         Contact contact = getContact(id);
         String photoUrl = photoFunction.apply(id, (MultipartFile) photoFile);
         contact.setPhotoUrl(photoUrl);
