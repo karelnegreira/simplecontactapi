@@ -1,5 +1,6 @@
 package com.example.apicontactapp.service;
 
+import com.example.apicontactapp.constant.Constant;
 import com.example.apicontactapp.domain.Contact;
 import com.example.apicontactapp.repo.ContactRepository;
 import jakarta.transaction.Transactional;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import static com.example.apicontactapp.constant.Constant.PHOTO_DIRECTORY;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
@@ -57,7 +59,7 @@ public class ContactService {
 
     private final BiFunction<String, MultipartFile, String> photoFunction = (id, image) -> {
         try {
-            Path pathStorageFile = Paths.get("").toAbsolutePath().normalize();
+            Path pathStorageFile = Paths.get(PHOTO_DIRECTORY).toAbsolutePath().normalize();
             if (!Files.exists(pathStorageFile)) {
                 Files.createDirectories(pathStorageFile);
             }
