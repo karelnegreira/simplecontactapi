@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static com.example.apicontactapp.constant.Constant.PHOTO_DIRECTORY;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @RestController
 @RequestMapping("/contacts")
@@ -50,7 +51,7 @@ public class ContactResource {
         return ResponseEntity.ok().body(contactService.updatePhoto(id,  file));
     }
 
-    @GetMapping(path="/image/{filename}")
+    @GetMapping(path="/image/{filename}", produces = IMAGE_JPEG_VALUE)
     public byte[] getPhoto(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
     }
