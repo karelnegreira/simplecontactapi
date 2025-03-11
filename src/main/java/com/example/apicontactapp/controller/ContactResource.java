@@ -51,7 +51,7 @@ public class ContactResource {
     }
 
     @GetMapping(path="/image/{filename}")
-    public byte[] getPhoto(@PathParam("filename") String filename) throws IOException {
+    public byte[] getPhoto(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
     }
 }
