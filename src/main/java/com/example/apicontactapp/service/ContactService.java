@@ -51,16 +51,16 @@ public class ContactService {
         //todo
     }
 
-    public String updatePhoto(String id, File photoFile) {
+    public String updatePhoto(String id, MultipartFile photoFile) {
         log.info("UPDATING PHOTO FOR USER");
         Contact contact = getContact(id);
-        String photoUrl = photoFunction.apply(id, (MultipartFile) photoFile);
+        String photoUrl = photoFunction.apply(id, photoFile);
         contact.setPhotoUrl(photoUrl);
         contactRepository.save(contact);
         return photoUrl;
     }
 
-    private final Function<String, String> fileExtension = filename -> Optional.of(filename).filter(name -> name.contains(".")).map(name -> "." + name.substring(filename.lastIndexOf(".") + 1)).orElse(".png");
+    private final Function<String, String> fileExtension = filename -> Optional.of(filename).filter(name -> name.contains(".")).map(name -> "." + name.substring(filename.lastIndexOf(".") + 1)).orElse(".jpg");
 
     private final BiFunction<String, MultipartFile, String> photoFunction = (id, image) -> {
         try {
