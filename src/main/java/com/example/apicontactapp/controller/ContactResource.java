@@ -24,7 +24,7 @@ public class ContactResource {
 
     @PostMapping
     public ResponseEntity<Contact> createContact(@RequestBody Contact contact) {
-        return ResponseEntity.created(URI.create("/contacts/<user_ID>")).body(contactService.createContact(contact));
+        return ResponseEntity.created(URI.create("/contacts/userID")).body(contactService.createContact(contact));
     }
 
     @GetMapping

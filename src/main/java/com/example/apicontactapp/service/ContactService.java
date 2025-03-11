@@ -1,10 +1,8 @@
 package com.example.apicontactapp.service;
 
-import com.example.apicontactapp.constant.Constant;
 import com.example.apicontactapp.domain.Contact;
 import com.example.apicontactapp.repo.ContactRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +27,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Service
 @Slf4j
 @Transactional(rollbackOn = Exception.class)
-@RequiredArgsConstructor
 public class ContactService {
     private static final Logger log = LoggerFactory.getLogger(ContactService.class);
     private final ContactRepository contactRepository;
